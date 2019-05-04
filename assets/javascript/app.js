@@ -1,11 +1,11 @@
-$(document).ready(function(){
+$(document).ready(function () {
     var config = {
-        apiKey: "AIzaSyBPCAxjycmuYaeY8RISjpPzUOSfmZIbQrQ",
+        apiKey: "AIzaSyC08BrCuOljDPny9ByJ--PDYHgG3O1GO9A",
         authDomain: "train-scheduler-68643.firebaseapp.com",
-        databaseURL: "https://train-scheduler-68643.firebaseio.com",
-        projectId: "train-scheduler-68643",
+        databaseURL: "https://train-scheduler-b203d.firebaseio.com",
+        projectId: "train-scheduler-b203d",
         storageBucket: "train-scheduler-68643.appspot.com",
-        messagingSenderId: "934455543386"
+        messagingSenderId: "559029938736"
     };
     firebase.initializeApp(config);
 
@@ -18,7 +18,7 @@ $(document).ready(function(){
     var firstTrain;
     var frequency = 0;
 
-    $("#add-train").on("click", function() {
+    $("#add-train").on("click", function () {
         event.preventDefault();
         // Storing and retreiving new train data
         name = $("#train-name").val().trim();
@@ -37,7 +37,7 @@ $(document).ready(function(){
         $("form")[0].reset();
     });
 
-    database.ref().on("child_added", function(childSnapshot) {
+    database.ref().on("child_added", function (childSnapshot) {
         var nextArr;
         var minAway;
         // Chang year so first train comes before now
@@ -52,17 +52,17 @@ $(document).ready(function(){
         nextTrain = moment(nextTrain).format("hh:mm");
 
         $("#add-row").append("<tr><td>" + childSnapshot.val().name +
-                "</td><td>" + childSnapshot.val().destination +
-                "</td><td>" + childSnapshot.val().frequency +
-                "</td><td>" + nextTrain + 
-                "</td><td>" + minAway + "</td></tr>");
+            "</td><td>" + childSnapshot.val().destination +
+            "</td><td>" + childSnapshot.val().frequency +
+            "</td><td>" + nextTrain +
+            "</td><td>" + minAway + "</td></tr>");
 
-            // Handle the errors
-        }, function(errorObject) {
-            console.log("Errors handled: " + errorObject.code);
+        // Handle the errors
+    }, function (errorObject) {
+        console.log("Errors handled: " + errorObject.code);
     });
 
-    database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+    database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
         // Change the HTML to reflect
         $("#name-display").html(snapshot.val().name);
         $("#email-display").html(snapshot.val().email);
